@@ -1,0 +1,20 @@
+version: '2'
+services:
+  fluentd:
+    container_name: fluentd
+    image: fluentd-test/fluentd
+    build: ./fluentd
+    volumes:
+      - data:/fluentd/log
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+  hellowinston:
+        container_name: hellowinston
+        image: fluentd-test/hello-winston
+        build: ./hello-winston
+        ports:
+          - "4000"
+volumes:
+  data:
+    driver: local
