@@ -3,7 +3,7 @@ import { TransformableInfo } from "logform";
 
 
 const alignedWithColorsAndTime = winston.format.combine(
-    winston.format.colorize(),
+    // winston.format.colorize(),
     winston.format.timestamp(),
     // winston.format.align(),
     winston.format.printf((info: TransformableInfo) => {

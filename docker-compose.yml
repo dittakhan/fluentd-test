@@ -9,12 +9,25 @@ services:
     ports:
       - "24224:24224"
       - "24224:24224/udp"
+    # logging:
+    #   driver: "json-file"
+      
   hellowinston:
-        container_name: hellowinston
-        image: fluentd-test/hello-winston
-        build: ./hello-winston
-        ports:
-          - "4000"
+    container_name: hellowinston
+    image: fluentd-test/hello-winston
+    build: ./hello-winston
+    ports:
+      - "4444:4000"
+    # links:
+    #   - fluentd 
+    logging:
+      driver: fluentd
+      options: 
+        tag: "{{.Name}}"
+        fluentd-async-connect: "true"
+        fluentd-retry-wait: "1s"
+        fluentd-max-retries: "30"
+
 volumes:
   data:
     driver: local
