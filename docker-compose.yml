@@ -11,6 +11,8 @@ services:
       - "24224:24224/udp"
     networks:
       - fluentd_test
+    links:
+      - "elasticsearch"
     # logging:
     #   driver: "json-file"
 
@@ -25,7 +27,17 @@ services:
       - discovery.type=single-node
     networks:
       - fluentd_test
-        
+
+  kibana:
+    container_name: kibana
+    image: kibana:7.6.0
+    links:
+      - "elasticsearch"
+    ports:
+      - "5601:5601"
+    networks:
+      - fluentd_test
+          
   hellowinston:
     container_name: hellowinston
     image: fluentd-test/hello-winston
