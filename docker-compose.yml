@@ -9,15 +9,31 @@ services:
     ports:
       - "24224:24224"
       - "24224:24224/udp"
+    networks:
+      - fluentd_test
     # logging:
     #   driver: "json-file"
-      
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:7.6.0
+    expose:
+      - 9200
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+    networks:
+      - fluentd_test
+        
   hellowinston:
     container_name: hellowinston
     image: fluentd-test/hello-winston
     build: ./hello-winston
     ports:
       - "4444:4000"
+    networks:
+      - fluentd_test
     # links:
     #   - fluentd 
     logging:
@@ -28,6 +44,12 @@ services:
         fluentd-async-connect: "true"
         # fluentd-retry-wait: "1s"
         # fluentd-max-retries: "30"
+
+
 volumes:
   data:
     driver: local
+
+networks: 
+  fluentd_test:
+    external: true
