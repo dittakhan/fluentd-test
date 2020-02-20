@@ -24,10 +24,10 @@ services:
       driver: fluentd
       options: 
         tag: "{{.Name}}"
+        # fluent-address: "localhost:24224"
         fluentd-async-connect: "true"
-        fluentd-retry-wait: "1s"
-        fluentd-max-retries: "30"
-
+        # fluentd-retry-wait: "1s"
+        # fluentd-max-retries: "30"
 volumes:
   data:
     driver: local
